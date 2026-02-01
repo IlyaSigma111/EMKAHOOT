@@ -201,22 +201,6 @@
             margin-bottom: 5px;
         }
         
-        /* ПРОГРЕСС БАР */
-        .progress-bar {
-            height: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-            margin: 15px 0;
-            overflow: hidden;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent), var(--primary));
-            border-radius: 4px;
-            transition: width 0.5s ease;
-        }
-        
         /* КОД ИГРЫ - ИСПРАВЛЕННЫЙ (теперь видно) */
         .game-code {
             font-family: 'Courier New', monospace;
@@ -487,137 +471,139 @@
     </style>
 </head>
 <body class="teacher-page">
-    <!-- БОКОВАЯ ПАНЕЛЬ -->
-    <div class="sidebar">
-        <div class="logo">
-            <div class="logo-icon">⚡</div>
-            <h2>ФИЗИКА КАХУТ</h2>
-            <p style="color: var(--gray); margin-top: 5px;">Панель учителя</p>
-        </div>
-        
-        <button onclick="startNewGame()" class="btn btn-primary">
-            <i class="fas fa-plus-circle"></i> НОВАЯ ИГРА
-        </button>
-        
-        <button onclick="copyGameCode()" class="btn btn-success" id="copyCodeBtn" style="display: none; margin-top: 10px;">
-            <i class="fas fa-copy"></i> КОПИРОВАТЬ КОД
-        </button>
-        
-        <div class="card" id="startSection" style="display: block; margin-top: 20px;">
-            <div class="card-title">
-                <i class="fas fa-play-circle"></i>
-                <span>БЫСТРЫЙ СТАРТ</span>
+    <div id="mainInterface" class="teacher-container">
+        <!-- БОКОВАЯ ПАНЕЛЬ -->
+        <div class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">⚡</div>
+                <h2>ФИЗИКА КАХУТ</h2>
+                <p style="color: var(--gray); margin-top: 5px;">Панель учителя</p>
             </div>
-            <p style="color: var(--gray); margin-bottom: 20px;">
-                Создайте игру и покажите код ученикам. Они подключатся с телефонов.
-            </p>
+            
             <button onclick="startNewGame()" class="btn btn-primary">
-                <i class="fas fa-rocket"></i> СОЗДАТЬ ИГРУ
+                <i class="fas fa-plus-circle"></i> НОВАЯ ИГРА
             </button>
-        </div>
-    </div>
-
-    <!-- ОСНОВНОЙ КОНТЕНТ -->
-    <div class="main-content">
-        <!-- ШАПКА -->
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
-            <h1 style="font-size: 2.5rem; background: linear-gradient(45deg, var(--accent), var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
-                <i class="fas fa-chalkboard-teacher"></i> Панель управления
-            </h1>
-            <div id="gameStatus" style="color: var(--success); font-weight: bold; padding: 10px 20px; background: rgba(0, 255, 136, 0.1); border-radius: 25px;">
-                🔴 НЕТ АКТИВНОЙ ИГРЫ
+            
+            <button onclick="copyGameCode()" class="btn btn-success" id="copyCodeBtn" style="display: none; margin-top: 10px;">
+                <i class="fas fa-copy"></i> КОПИРОВАТЬ КОД
+            </button>
+            
+            <div class="card" id="startSection" style="display: block; margin-top: 20px;">
+                <div class="card-title">
+                    <i class="fas fa-play-circle"></i>
+                    <span>БЫСТРЫЙ СТАРТ</span>
+                </div>
+                <p style="color: var(--gray); margin-bottom: 20px;">
+                    Создайте игру и покажите код ученикам. Они подключатся с телефонов.
+                </p>
+                <button onclick="startNewGame()" class="btn btn-primary">
+                    <i class="fas fa-rocket"></i> СОЗДАТЬ ИГРУ
+                </button>
             </div>
         </div>
 
-        <div class="content-wrapper">
-            <!-- ЛЕВАЯ КОЛОНКА (управление и игроки) -->
-            <div class="left-column">
-                <!-- УПРАВЛЕНИЕ ИГРОЙ -->
-                <div class="card" id="gameControls" style="display: none;">
-                    <div class="card-title">
-                        <i class="fas fa-gamepad"></i>
-                        <span>УПРАВЛЕНИЕ ИГРОЙ</span>
-                    </div>
-                    
-                    <div style="text-align: center; margin: 20px 0;">
-                        <h3 style="color: var(--accent); margin-bottom: 10px;">КОД ИГРЫ:</h3>
-                        <div class="game-code" id="gameCodeDisplay">----</div>
-                        <p style="color: var(--gray);">Покажите этот код ученикам для подключения</p>
-                    </div>
-                    
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 25px 0;">
-                        <button onclick="startNextQuestion()" class="btn btn-success">
-                            <i class="fas fa-forward"></i> СЛЕДУЮЩИЙ ВОПРОС
-                        </button>
-                        <button onclick="showAnswer()" class="btn btn-warning">
-                            <i class="fas fa-eye"></i> ПОКАЗАТЬ ОТВЕТ
-                        </button>
-                        <button onclick="showStats()" class="btn btn-primary">
-                            <i class="fas fa-chart-bar"></i> СТАТИСТИКА
-                        </button>
-                        <button onclick="endQuestion()" class="btn">
-                            <i class="fas fa-stop"></i> ЗАВЕРШИТЬ ВОПРОС
-                        </button>
-                    </div>
-                    
-                    <div style="display: flex; justify-content: center; gap: 15px; margin-top: 20px;">
-                        <button onclick="resetGame()" class="btn btn-danger" style="width: auto;">
-                            <i class="fas fa-trash"></i> СБРОСИТЬ ИГРУ
-                        </button>
-                    </div>
-                </div>
-
-                <!-- ИГРОКИ -->
-                <div class="card">
-                    <div class="card-title">
-                        <i class="fas fa-users"></i>
-                        <span>ИГРОКИ (<span id="playerCount">0</span>)</span>
-                    </div>
-                    
-                    <div id="playersList">
-                        <div style="text-align: center; padding: 40px; color: var(--gray);">
-                            <div style="font-size: 60px; margin-bottom: 20px;">👤</div>
-                            <p>Игроки появятся здесь после подключения</p>
-                        </div>
-                    </div>
+        <!-- ОСНОВНОЙ КОНТЕНТ -->
+        <div class="main-content">
+            <!-- ШАПКА -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
+                <h1 style="font-size: 2.5rem; background: linear-gradient(45deg, var(--accent), var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                    <i class="fas fa-chalkboard-teacher"></i> Панель управления
+                </h1>
+                <div id="gameStatus" style="color: var(--success); font-weight: bold; padding: 10px 20px; background: rgba(0, 255, 136, 0.1); border-radius: 25px;">
+                    🔴 НЕТ АКТИВНОЙ ИГРЫ
                 </div>
             </div>
 
-            <!-- ПРАВАЯ КОЛОНКА (статистика и вопросы) -->
-            <div class="right-column">
-                <!-- СТАТИСТИКА -->
-                <div class="card">
-                    <div class="card-title">
-                        <i class="fas fa-chart-line"></i>
-                        <span>СТАТИСТИКА</span>
-                    </div>
-                    
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                        <div>
-                            <span style="color: var(--gray);">Вопрос:</span>
-                            <span style="font-size: 1.3rem; font-weight: bold; margin-left: 10px;">
-                                <span id="currentQ">0</span> / <span id="totalQ">30</span>
-                            </span>
+            <div class="content-wrapper">
+                <!-- ЛЕВАЯ КОЛОНКА (управление и игроки) -->
+                <div class="left-column">
+                    <!-- УПРАВЛЕНИЕ ИГРОЙ -->
+                    <div class="card" id="gameControls" style="display: none;">
+                        <div class="card-title">
+                            <i class="fas fa-gamepad"></i>
+                            <span>УПРАВЛЕНИЕ ИГРОЙ</span>
+                        </div>
+                        
+                        <div style="text-align: center; margin: 20px 0;">
+                            <h3 style="color: var(--accent); margin-bottom: 10px;">КОД ИГРЫ:</h3>
+                            <div class="game-code" id="gameCodeDisplay">----</div>
+                            <p style="color: var(--gray);">Покажите этот код ученикам для подключения</p>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 25px 0;">
+                            <button onclick="startNextQuestion()" class="btn btn-success">
+                                <i class="fas fa-forward"></i> СЛЕДУЮЩИЙ ВОПРОС
+                            </button>
+                            <button onclick="showAnswer()" class="btn btn-warning">
+                                <i class="fas fa-eye"></i> ПОКАЗАТЬ ОТВЕТ
+                            </button>
+                            <button onclick="showStats()" class="btn btn-primary">
+                                <i class="fas fa-chart-bar"></i> СТАТИСТИКА
+                            </button>
+                            <button onclick="endQuestion()" class="btn">
+                                <i class="fas fa-stop"></i> ЗАВЕРШИТЬ ВОПРОС
+                            </button>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: center; gap: 15px; margin-top: 20px;">
+                            <button onclick="resetGame()" class="btn btn-danger" style="width: auto;">
+                                <i class="fas fa-trash"></i> СБРОСИТЬ ИГРУ
+                            </button>
                         </div>
                     </div>
-                    
-                    <div id="statsContent">
-                        <div style="text-align: center; padding: 40px; color: var(--gray);">
-                            <div style="font-size: 60px; margin-bottom: 20px;">📊</div>
-                            <p>Статистика появится после ответов на вопросы</p>
+
+                    <!-- ИГРОКИ -->
+                    <div class="card">
+                        <div class="card-title">
+                            <i class="fas fa-users"></i>
+                            <span>ИГРОКИ (<span id="playerCount">0</span>)</span>
+                        </div>
+                        
+                        <div id="playersList">
+                            <div style="text-align: center; padding: 40px; color: var(--gray);">
+                                <div style="font-size: 60px; margin-bottom: 20px;">👤</div>
+                                <p>Игроки появятся здесь после подключения</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- СПИСОК ВОПРОСОВ -->
-                <div class="card">
-                    <div class="card-title">
-                        <i class="fas fa-list-ol"></i>
-                        <span>СПИСОК ВОПРОСОВ (30)</span>
+                <!-- ПРАВАЯ КОЛОНКА (статистика и вопросы) -->
+                <div class="right-column">
+                    <!-- СТАТИСТИКА -->
+                    <div class="card">
+                        <div class="card-title">
+                            <i class="fas fa-chart-line"></i>
+                            <span>СТАТИСТИКА</span>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <div>
+                                <span style="color: var(--gray);">Вопрос:</span>
+                                <span style="font-size: 1.3rem; font-weight: bold; margin-left: 10px;">
+                                    <span id="currentQ">0</span> / <span id="totalQ">30</span>
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div id="statsContent">
+                            <div style="text-align: center; padding: 40px; color: var(--gray);">
+                                <div style="font-size: 60px; margin-bottom: 20px;">📊</div>
+                                <p>Статистика появится после ответов на вопросы</p>
+                            </div>
+                        </div>
                     </div>
-                    
-                    <div class="questions-list" id="questionsList">
-                        <!-- Вопросы загрузятся через JS -->
+
+                    <!-- СПИСОК ВОПРОСОВ -->
+                    <div class="card">
+                        <div class="card-title">
+                            <i class="fas fa-list-ol"></i>
+                            <span>СПИСОК ВОПРОСОВ (30)</span>
+                        </div>
+                        
+                        <div class="questions-list" id="questionsList">
+                            <!-- Вопросы загрузятся через JS -->
+                        </div>
                     </div>
                 </div>
             </div>
