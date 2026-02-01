@@ -27,6 +27,9 @@ function initDOM() {
     window.presentationQuestion = document.getElementById('presentationQuestion');
     window.copyCodeBtn = document.getElementById('copyCodeBtn');
     window.gameStatus = document.getElementById('gameStatus');
+    window.mainInterface = document.getElementById('mainInterface');
+    window.sidebarElement = document.querySelector('.sidebar');
+    window.mainContentElement = document.querySelector('.main-content');
 }
 
 // ================ ОСНОВНЫЕ ФУНКЦИИ ================
@@ -188,8 +191,7 @@ function enterPresentationMode(question) {
     if (!presentationMode || !presentationQNum || !presentationQuestion) return;
     
     // Скрыть основной интерфейс
-    document.querySelector('.main-content').style.display = 'none';
-    document.querySelector('.sidebar').style.display = 'none';
+    if (mainInterface) mainInterface.style.display = 'none';
     presentationMode.style.display = 'flex';
     
     // Показать вопрос
@@ -226,8 +228,7 @@ function exitPresentation() {
     if (!presentationMode) return;
     
     // Вернуться к основному интерфейсу
-    document.querySelector('.main-content').style.display = 'block';
-    document.querySelector('.sidebar').style.display = 'flex';
+    if (mainInterface) mainInterface.style.display = 'flex';
     presentationMode.style.display = 'none';
     
     // Остановить таймер
@@ -660,7 +661,6 @@ function startPresentationTimer(seconds) {
     let timeLeft = seconds;
     presentationTimer.textContent = timeLeft;
     presentationTimer.style.color = '#00ff88';
-    presentationTimer.style.animation = 'none';
     
     // Очищаем предыдущий таймер
     if (presentationTimerInterval) {
@@ -669,15 +669,13 @@ function startPresentationTimer(seconds) {
     
     presentationTimerInterval = setInterval(() => {
         timeLeft--;
-        presentationTimer.textContent = timeLeft;
+        if (presentationTimer) presentationTimer.textContent = timeLeft;
         
         // Менять цвет при окончании времени
-        if (timeLeft <= 5) {
+        if (timeLeft <= 5 && presentationTimer) {
             presentationTimer.style.color = '#ff416c';
-            presentationTimer.style.animation = 'pulse 0.5s infinite';
-        } else if (timeLeft <= 15) {
+        } else if (timeLeft <= 15 && presentationTimer) {
             presentationTimer.style.color = '#ff9e00';
-            presentationTimer.style.animation = 'none';
         }
         
         if (timeLeft <= 0) {
@@ -698,7 +696,12 @@ function copyGameCode() {
         return;
     }
     
-    const code = currentGameId.replace('game_', '');
+    if (!gameCodeDisplay || gameCodeDisplay.textContent === '----') {
+        alert("Код игры еще не создан!");
+        return;
+    }
+    
+    const code = gameCodeDisplay.textContent;
     navigator.clipboard.writeText(code).then(() => {
         showNotification("📋 Код скопирован в буфер!");
         
@@ -709,8 +712,10 @@ function copyGameCode() {
             copyCodeBtn.style.background = 'linear-gradient(45deg, #00ff88, #00cc66)';
             
             setTimeout(() => {
-                copyCodeBtn.innerHTML = originalText;
-                copyCodeBtn.style.background = '';
+                if (copyCodeBtn) {
+                    copyCodeBtn.innerHTML = originalText;
+                    copyCodeBtn.style.background = '';
+                }
             }, 2000);
         }
     }).catch(err => {
