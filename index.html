@@ -69,10 +69,8 @@
             margin-bottom: 20px;
             display: inline-block;
             animation: float 3s ease-in-out infinite;
-            background: linear-gradient(45deg, #4361ee, #4cc9f0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--accent);
+            text-shadow: 0 0 20px rgba(76, 201, 240, 0.7), 0 0 40px rgba(67, 97, 238, 0.5);
         }
         
         @keyframes float {
@@ -82,10 +80,8 @@
         
         h1 {
             font-size: 3.5rem;
-            background: linear-gradient(45deg, var(--accent), var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: white;
+            text-shadow: 0 0 20px rgba(76, 201, 240, 0.7), 0 0 40px rgba(67, 97, 238, 0.5);
             margin-bottom: 10px;
             font-weight: 800;
         }
@@ -95,6 +91,7 @@
             color: var(--accent);
             max-width: 600px;
             margin: 0 auto 20px;
+            text-shadow: 0 0 10px rgba(76, 201, 240, 0.5);
         }
         
         /* СТАТИСТИКА */
@@ -127,12 +124,17 @@
             font-size: 52px;
             margin-bottom: 20px;
             display: inline-block;
+            color: var(--accent);
         }
         
         .stat-item h4 {
             font-size: 1.3rem;
             margin-bottom: 10px;
-            color: var(--light);
+            color: white;
+        }
+        
+        .stat-item p {
+            color: var(--gray);
         }
         
         /* ВЫБОР РОЛИ */
@@ -178,12 +180,13 @@
             font-size: 70px;
             margin-bottom: 25px;
             display: inline-block;
+            color: var(--accent);
         }
         
         .role-card h3 {
             font-size: 1.8rem;
             margin-bottom: 20px;
-            color: var(--light);
+            color: white;
         }
         
         /* КНОПКИ */
@@ -287,6 +290,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            color: white;
         }
         
         /* МОДЕРАТОРСКАЯ ССЫЛКА */
@@ -302,6 +306,7 @@
             cursor: pointer;
             background: rgba(0, 255, 136, 0.1);
             margin-top: 15px;
+            border: 1px solid rgba(0, 255, 136, 0.3);
         }
         
         .moderator-link:hover {
@@ -418,19 +423,19 @@
             <div class="steps">
                 <div class="step">
                     <div class="step-number">1</div>
-                    <p><strong style="color: var(--light);">Учитель</strong> открывает панель управления на смарт-доске и создаёт игру</p>
+                    <p><strong style="color: white;">Учитель</strong> открывает панель управления на смарт-доске и создаёт игру</p>
                 </div>
                 <div class="step">
                     <div class="step-number">2</div>
-                    <p><strong style="color: var(--light);">Ученики</strong> подключаются с телефонов по коду игры (8 цифр)</p>
+                    <p><strong style="color: white;">Ученики</strong> подключаются с телефонов по коду игры (8 цифр)</p>
                 </div>
                 <div class="step">
                     <div class="step-number">3</div>
-                    <p><strong style="color: var(--light);">Учитель показывает вопрос</strong> на доске. Ученики отвечают с телефонов</p>
+                    <p><strong style="color: white;">Учитель показывает вопрос</strong> на доске. Ученики отвечают с телефонов</p>
                 </div>
                 <div class="step">
                     <div class="step-number">4</div>
-                    <p><strong style="color: var(--light);">Учитель нажимает "Показать ответ"</strong> и видит статистику ответов</p>
+                    <p><strong style="color: white;">Учитель нажимает "Показать ответ"</strong> и видит статистику ответов</p>
                 </div>
             </div>
         </div>
@@ -440,16 +445,16 @@
             <p>Интерактивная система изучения физики | Тема: Электромагнитные волны и сотовая связь</p>
             <div class="tech-stack">
                 <span class="tech-item">
-                    <i class="fas fa-fire"></i> Firebase
+                    <i class="fas fa-fire" style="color: #ffa726;"></i> Firebase
                 </span>
                 <span class="tech-item">
-                    <i class="fab fa-html5"></i> HTML5
+                    <i class="fab fa-html5" style="color: #e34f26;"></i> HTML5
                 </span>
                 <span class="tech-item">
-                    <i class="fab fa-js"></i> JavaScript
+                    <i class="fab fa-js" style="color: #f7df1e;"></i> JavaScript
                 </span>
                 <span class="tech-item">
-                    <i class="fas fa-graduation-cap"></i> 9 класс
+                    <i class="fas fa-graduation-cap" style="color: #4cc9f0;"></i> 9 класс
                 </span>
             </div>
             <p style="margin-top: 20px;">
